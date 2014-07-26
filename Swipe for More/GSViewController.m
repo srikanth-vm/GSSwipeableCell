@@ -90,6 +90,7 @@ typedef NS_ENUM(NSUInteger, ButtonIdentifier){
     cell.picture.image = [UIImage imageNamed:aDriver.imageName];
     cell.wins.text = aDriver.wins;
     cell.points.text = aDriver.points;
+    cell.tag = indexPath.row;
     return cell;
 }
 
@@ -113,17 +114,18 @@ typedef NS_ENUM(NSUInteger, ButtonIdentifier){
              ];
 }
 
--(void)didClickOnButtonWithIdentifier:(NSInteger)buttonIdentifier
+-(void)didClickOnButtonWithIdentifier:(NSInteger)buttonIdentifier onCell:(id)cell
 {
+    SampleTableViewCell *tableViewCell = (SampleTableViewCell*)cell;
     switch (buttonIdentifier) {
         case AddButton:
-            NSLog(@"Add Button Got Clicked");
+            NSLog(@"Add Button Got Clicked on Cell : %d", tableViewCell.tag);
             break;
         case EditButton:
-            NSLog(@"Edit Button Got Clicked");
+            NSLog(@"Edit Button Got Clicked on Cell : %d", tableViewCell.tag);
             break;
         case DeleteButton:
-            NSLog(@"Delete Button Got Clicked");
+            NSLog(@"Delete Button Got Clicked on Cell : %d", tableViewCell.tag);
             break;
     }
 }

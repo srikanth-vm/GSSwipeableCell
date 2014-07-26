@@ -140,17 +140,30 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 - (void)addGesturesToCell
 {
     UISwipeGestureRecognizer *swipeLeftGesture, *swipeRightGesture;
+//    UIPanGestureRecognizer *panGesture;
     swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                  action:@selector(userSwipedLeft:)];
     [swipeLeftGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
     swipeRightGesture  = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(userSwipedRight:)];
     [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+//    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+//                                                         action:@selector(userDraggedCell:)];
+//    [self addGestureRecognizer:panGesture];
     [self addGestureRecognizer:swipeLeftGesture];
     [self addGestureRecognizer:swipeRightGesture];
 }
 
 #pragma mark - User Interactions
+
+- (IBAction)userDraggedCell:(UIPanGestureRecognizer *)recognizer
+{
+    CGPoint translation = [recognizer translationInView:self.contentView];
+    
+    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
+    
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self.contentView];
+}
 
 - (IBAction)userSwipedLeft:(UISwipeGestureRecognizer *)sender
 {
@@ -166,8 +179,8 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 
 - (IBAction)buttonClicked:(GSButton*)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickOnButtonWithIdentifier:)]) {
-        [self.delegate didClickOnButtonWithIdentifier:sender.buttonIdentifier];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickOnButtonWithIdentifier:onCell:)]) {
+        [self.delegate didClickOnButtonWithIdentifier:sender.buttonIdentifier onCell:self];
     }
 }
 
