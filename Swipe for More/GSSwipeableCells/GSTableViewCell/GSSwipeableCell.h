@@ -42,12 +42,27 @@
 - (void)didClickOnButtonWithIdentifier:(NSInteger)buttonIdentifier onCell:(id)cell;
 @end
 
+// Class
+
 @interface GSSwipeableCell : UITableViewCell
 
 @property (weak, nonatomic) id<GSSwipeCellDelegate>delegate;
 
+/**
+ * Accepts array of dictionaries {ButtonTitle, ButtonTitleColor, ButtonColor}
+ * Height will be calculated on number of buttons and cell height
+ */
 - (void)addUtilityButtons:(NSArray*)utilButtons;
+
+/**
+ * Alternate Initialiser.
+ * Accepts Width, which will be set as Button's Container View Width.
+ */
 - (void)addUtilityButtons:(NSArray*)utilButtons withWidth:(NSInteger)width;
-- (void)closeUtilityButtonsViewWithAnimation:(BOOL)shouldAnimate;
+
+/**
+ * Close forefully open drawers.
+ */
+- (void)closeButtonsViewWithAnimation:(BOOL)shouldAnimate;
 
 @end

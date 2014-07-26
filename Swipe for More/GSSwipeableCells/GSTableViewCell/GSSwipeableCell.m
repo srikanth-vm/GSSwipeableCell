@@ -31,38 +31,11 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 
 @implementation GSSwipeableCell
 
-/**
- * Public Method
- * Accepts array of dictionaries {ButtonTitle, ButtonTitleColor, ButtonColor}
- * and Int value for the Buttons Width. 
- * Height will be calculated on number of buttons and cell height
- */
-- (void)addUtilityButtons:(NSArray*)utilButtons
-{
-    self.buttonWidth = ButtonViewWidth;
-    [self initialiseButtonViewWithButtons:utilButtons];
-}
-
--(void)addUtilityButtons:(NSArray *)utilButtons withWidth:(NSInteger)width
-{
-    self.buttonWidth = width;
-    [self initialiseButtonViewWithButtons:utilButtons];
-}
-
-- (void)initialiseButtonViewWithButtons:(NSArray*)utilButtons
-{
-    if ([self canAddButtons:utilButtons]) {
-        self.buttons = utilButtons;
-        [self setUpButtonView];
-        self.swipeableCellState = GSSwipeableCellState_Closed;
-    } else {
-        NSLog(@"Buttons are not set up properly.");
-        abort();
-    }
-}
+#pragma mark - UITableViewCell Overrides
 
 - (void)awakeFromNib
 {
+    // Set Selection style to none if not set in derived classes.
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 
@@ -76,6 +49,54 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
     }
 }
 
+#pragma mark - Public Methods
+
+/**
+ * ButtonView Initialiser.
+ */
+- (void)addUtilityButtons:(NSArray*)utilButtons
+{
+    self.buttonWidth = ButtonViewWidth;
+    [self initialiseButtonViewWithButtons:utilButtons];
+}
+
+/**
+ * Alternate Initialiser with width
+ */
+-(void)addUtilityButtons:(NSArray *)utilButtons withWidth:(NSInteger)width
+{
+    self.buttonWidth = width;
+    [self initialiseButtonViewWithButtons:utilButtons];
+}
+
+/**
+ * Forecfully close open drawers with or without animation.
+ */
+- (void)closeButtonsViewWithAnimation:(BOOL)shouldAnimate
+{
+    [self closeUtilityButtonsViewWithAnimation:shouldAnimate];
+}
+
+#pragma mark - Init
+
+/**
+ * Check for inputs.
+ */
+- (void)initialiseButtonViewWithButtons:(NSArray*)utilButtons
+{
+    if ([self canAddButtons:utilButtons]) {
+        self.buttons = utilButtons;
+        [self setUpButtonView];
+        self.swipeableCellState = GSSwipeableCellState_Closed;
+    } else {
+        NSLog(@"Buttons are not set up properly.");
+        abort();
+    }
+}
+
+/**
+ * Check if buttons can be laid out in Cell's frame.
+ */
 - (BOOL)canAddButtons:(NSArray*)utilButtons
 {
     // Check if array is not empty
@@ -91,12 +112,22 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
     return NO;
 }
 
-#pragma mark - Init Views
+#pragma mark - Init Button Views
 
+/**
+ * Layout the ButtonView beneath Cell's ContentView
+ */
 - (void)setUpButtonView
 {
     if (self.buttonView == nil) {
-        UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - self.buttonWidth, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+        // Calculate ButtonView frame
+        CGFloat originX = CGRectGetWidth(self.bounds) - self.buttonWidth;
+        CGFloat buttonViewWidth = CGRectGetWidth(self.bounds);
+        CGFloat buttonViewHeight = CGRectGetHeight(self.bounds);
+        CGRect buttonViewRect = CGRectMake(originX, 0, buttonViewWidth, buttonViewHeight);
+        
+        // Initialise ButtonView
+        UIView *buttonView = [[UIView alloc] initWithFrame:buttonViewRect];
         self.buttonView = buttonView;
         [self setUpButtons];
         [self addSubview:self.buttonView];
@@ -108,17 +139,27 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
     }
 }
 
+/**
+ * Layout buttons and set up actions.
+ */
 - (void)setUpButtons
 {
     __block int loopCounter = 0;
     int totalNumberOfButtons = self.buttons.count;
     for (NSDictionary *buttonInfo in self.buttons) {
         
-        // Configure Button
+        // Initialise Button
         GSButton *editButton = [GSButton buttonWithType:UIButtonTypeCustom];
         [editButton setButtonIdentifier:loopCounter];
-        [editButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
-        CGRect buttonFrame = CGRectMake(0, CGRectGetHeight(self.bounds)/totalNumberOfButtons * loopCounter, self.buttonWidth, CGRectGetHeight(self.bounds)/totalNumberOfButtons);
+        [editButton addTarget:self
+                       action:@selector(buttonClicked:)
+             forControlEvents:UIControlEventTouchDown];
+        
+        // Update Button's frame
+        CGFloat originY = CGRectGetHeight(self.bounds)/totalNumberOfButtons * loopCounter;
+        CGFloat buttonWidth = self.buttonWidth;
+        CGFloat buttonHeight = CGRectGetHeight(self.bounds)/totalNumberOfButtons;
+        CGRect buttonFrame = CGRectMake(0, originY, buttonWidth, buttonHeight);
         [editButton setFrame:buttonFrame];
         
         // Customise Button
@@ -137,6 +178,9 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
     }
 }
 
+/**
+ * Add Gestures and its actions.
+ */
 - (void)addGesturesToCell
 {
     UISwipeGestureRecognizer *swipeLeftGesture, *swipeRightGesture;
@@ -159,16 +203,12 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 - (IBAction)userDraggedCell:(UIPanGestureRecognizer *)recognizer
 {
     CGPoint translation = [recognizer translationInView:self.contentView];
-    
     recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
-    
     [recognizer setTranslation:CGPointMake(0, 0) inView:self.contentView];
 }
 
 - (IBAction)userSwipedLeft:(UISwipeGestureRecognizer *)sender
 {
-    CGPoint swipedPoint = [sender locationInView:self.contentView];
-    NSLog(@"Swiped : X : %f", swipedPoint.x);
     [self openUtilityButtonsViewWithAnimation:YES];
 }
 
@@ -202,7 +242,6 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 }
 
 /**
- * Public Method.
  * Closes Utility Button View
  * @param BOOL shouldAnimate
  */
