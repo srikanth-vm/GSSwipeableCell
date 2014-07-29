@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *wins;
 @property (weak, nonatomic) IBOutlet UILabel *points;
 @property (weak, nonatomic) IBOutlet UIImageView *picture;
+@property (weak, nonatomic) IBOutlet UILabel *timeStampLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *swipeForMore;
 @end

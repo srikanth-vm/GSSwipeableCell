@@ -9,8 +9,7 @@
 #import "GSViewController.h"
 
 typedef NS_ENUM(NSUInteger, ButtonIdentifier){
-    AddButton = 0,
-    EditButton,
+    MoreButton = 0,
     DeleteButton
 };
 
@@ -85,11 +84,14 @@ typedef NS_ENUM(NSUInteger, ButtonIdentifier){
     SampleTableViewCell *cell = (SampleTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
     [cell addUtilityButtons:[self utilButtons]];
     [cell setGSSwipeCelldelegate:self];
-    DriverVO *aDriver = tableData[indexPath.row];
+    /*DriverVO *aDriver = tableData[indexPath.row];
     cell.driverName.text = aDriver.driverName;
     cell.picture.image = [UIImage imageNamed:aDriver.imageName];
     cell.wins.text = aDriver.wins;
-    cell.points.text = aDriver.points;
+    cell.points.text = aDriver.points;*/
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    cell.timeStampLabel.text = [DateFormatter stringFromDate:[NSDate date]];
     cell.tag = indexPath.row;
     return cell;
 }
@@ -101,28 +103,19 @@ typedef NS_ENUM(NSUInteger, ButtonIdentifier){
 
 - (NSArray*)utilButtons
 {
-    NSDictionary *addButton = @{ButtonTitle: @"Add",
-                                ButtonColor: [UIColor yellowColor],
-                                ButtonTitleColor: [UIColor blackColor]};
-    NSDictionary *editButton = @{ButtonTitle: @"Edit",
-                                 ButtonColor: [UIColor redColor]};
+    NSDictionary *moreButton = @{ButtonTitle: @"More",
+                                 ButtonColor: [UIColor lightGrayColor]};
     NSDictionary *deleteButton = @{ButtonTitle: @"Delete",
-                                   ButtonColor: [UIColor blackColor]};
-    return @[addButton,
-             editButton,
-             deleteButton
-             ];
+                                   ButtonColor: [UIColor redColor]};
+    return @[moreButton, deleteButton];
 }
 
 -(void)didClickOnButtonWithIdentifier:(NSInteger)buttonIdentifier onCell:(id)cell
 {
     SampleTableViewCell *tableViewCell = (SampleTableViewCell*)cell;
     switch (buttonIdentifier) {
-        case AddButton:
-            NSLog(@"Add Button Got Clicked on Cell : %d", tableViewCell.tag);
-            break;
-        case EditButton:
-            NSLog(@"Edit Button Got Clicked on Cell : %d", tableViewCell.tag);
+        case MoreButton:
+            NSLog(@"More Button Got Clicked on Cell : %d", tableViewCell.tag);
             break;
         case DeleteButton:
             NSLog(@"Delete Button Got Clicked on Cell : %d", tableViewCell.tag);
