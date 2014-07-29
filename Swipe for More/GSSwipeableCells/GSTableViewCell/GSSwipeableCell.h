@@ -46,7 +46,10 @@
 
 @interface GSSwipeableCell : UITableViewCell
 
-@property (weak, nonatomic) id<GSSwipeCellDelegate>delegate;
+/**
+ * To delegate back button clicks.
+ */
+@property (weak, nonatomic) id<GSSwipeCellDelegate>GSSwipeCelldelegate;
 
 /**
  * Accepts array of dictionaries {ButtonTitle, ButtonTitleColor, ButtonColor}

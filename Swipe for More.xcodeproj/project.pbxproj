@@ -25,6 +25,7 @@
 		A79C09201982196500F9C555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A79C091E1982196500F9C555 /* InfoPlist.strings */; };
 		A79C09221982196500F9C555 /* Swipe_for_MoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C09211982196500F9C555 /* Swipe_for_MoreTests.m */; };
 		F318B86A1983919E00407BC7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F318B8691983919E00407BC7 /* Images.xcassets */; };
+		F31E5F871987AB8700100A05 /* demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = F31E5F861987AB8700100A05 /* demo.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		A79C091F1982196500F9C555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A79C09211982196500F9C555 /* Swipe_for_MoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Swipe_for_MoreTests.m; sourceTree = "<group>"; };
 		F318B8691983919E00407BC7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Swipe for More/Images.xcassets"; sourceTree = "<group>"; };
+		F31E5F861987AB8700100A05 /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 		A79C08FD1982196500F9C555 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F31E5F861987AB8700100A05 /* demo.gif */,
 				A79C08FE1982196500F9C555 /* Swipe for More-Info.plist */,
 				A79C08FF1982196500F9C555 /* InfoPlist.strings */,
 				A79C09021982196500F9C555 /* main.m */,
@@ -289,6 +292,7 @@
 			files = (
 				A7228D7B19824D9900B39A8E /* SampleTableViewCell.xib in Resources */,
 				F318B86A1983919E00407BC7 /* Images.xcassets in Resources */,
+				F31E5F871987AB8700100A05 /* demo.gif in Resources */,
 				A79C09011982196500F9C555 /* InfoPlist.strings in Resources */,
 				A79C090A1982196500F9C555 /* Main.storyboard in Resources */,
 			);

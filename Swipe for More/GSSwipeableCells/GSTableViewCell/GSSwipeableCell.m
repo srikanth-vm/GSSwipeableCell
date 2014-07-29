@@ -220,8 +220,8 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 
 - (IBAction)buttonClicked:(GSButton*)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickOnButtonWithIdentifier:onCell:)]) {
-        [self.delegate didClickOnButtonWithIdentifier:sender.buttonIdentifier onCell:self];
+    if (self.GSSwipeCelldelegate && [self.GSSwipeCelldelegate respondsToSelector:@selector(didClickOnButtonWithIdentifier:onCell:)]) {
+        [self.GSSwipeCelldelegate didClickOnButtonWithIdentifier:sender.buttonIdentifier onCell:self];
     }
 }
 

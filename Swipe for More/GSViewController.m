@@ -84,7 +84,7 @@ typedef NS_ENUM(NSUInteger, ButtonIdentifier){
 {
     SampleTableViewCell *cell = (SampleTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
     [cell addUtilityButtons:[self utilButtons]];
-    [cell setDelegate:self];
+    [cell setGSSwipeCelldelegate:self];
     DriverVO *aDriver = tableData[indexPath.row];
     cell.driverName.text = aDriver.driverName;
     cell.picture.image = [UIImage imageNamed:aDriver.imageName];
