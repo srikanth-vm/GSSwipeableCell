@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *points;
 @property (weak, nonatomic) IBOutlet UIImageView *picture;
 
+@property (weak, nonatomic) IBOutlet UILabel *swipeForMore;
 @end

@@ -128,6 +128,7 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
         
         // Initialise ButtonView
         UIView *buttonView = [[UIView alloc] initWithFrame:buttonViewRect];
+        [buttonView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
         self.buttonView = buttonView;
         [self setUpButtons];
         [self addSubview:self.buttonView];
