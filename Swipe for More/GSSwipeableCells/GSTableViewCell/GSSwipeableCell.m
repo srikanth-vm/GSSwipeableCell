@@ -70,6 +70,16 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 }
 
 /**
+ *  Opens a utility drawer
+ *
+ *  @param animationFlag YES/NO
+ */
+-(void)openUtilityDrawerAnimated:(BOOL)animationFlag
+{
+    [self openUtilityButtonsViewWithAnimation:animationFlag];
+}
+
+/**
  * Forecfully close open drawers with or without animation.
  */
 - (void)closeButtonsViewWithAnimation:(BOOL)shouldAnimate
