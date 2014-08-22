@@ -64,6 +64,14 @@
 - (void)addUtilityButtons:(NSArray*)utilButtons withWidth:(NSInteger)width;
 
 /**
+ *  Imitates swipe left gesture and opens a cell's utility drawer,
+ * programatically.
+ *
+ *  @param animationFlag Whether to animate or not
+ */
+- (void)openUtilityDrawerAnimated:(BOOL)animationFlag;
+
+/**
  * Close forefully open drawers.
  */
 - (void)closeButtonsViewWithAnimation:(BOOL)shouldAnimate;
