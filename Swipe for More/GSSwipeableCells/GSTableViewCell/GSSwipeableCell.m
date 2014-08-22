@@ -239,17 +239,19 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 
 - (void)openUtilityButtonsViewWithAnimation:(BOOL)shouldAnimate
 {
-    CGRect frame = self.contentView.frame;
-    frame.origin.x -= self.buttonWidth;
-    self.swipeableCellState = GSSwipeableCellState_Opening;
-    if (shouldAnimate) {
-        [UIView animateWithDuration:SwipeAnimationDuration animations:^{
+    if (self.swipeableCellState == GSSwipeableCellState_Closed) {
+        CGRect frame = self.contentView.frame;
+        frame.origin.x -= self.buttonWidth;
+        self.swipeableCellState = GSSwipeableCellState_Opening;
+        if (shouldAnimate) {
+            [UIView animateWithDuration:SwipeAnimationDuration animations:^{
+                [self.contentView setFrame:frame];
+            }];
+        } else {
             [self.contentView setFrame:frame];
-        }];
-    } else {
-        [self.contentView setFrame:frame];
+        }
+        [self closeOtherOpenUtilityButtonView];
     }
-    [self closeOtherOpenUtilityButtonView];
 }
 
 /**
@@ -260,6 +262,7 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 {
     CGRect frame = self.contentView.frame;
     frame.origin.x = 0;
+    self.swipeableCellState = GSSwipeableCellState_Closed;
     if (shouldAnimate) {
         [UIView animateWithDuration:SwipeAnimationDuration animations:^{
             [self.contentView setFrame:frame];
