@@ -195,16 +195,12 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 - (void)addGesturesToCell
 {
     UISwipeGestureRecognizer *swipeLeftGesture, *swipeRightGesture;
-//    UIPanGestureRecognizer *panGesture;
     swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                  action:@selector(userSwipedLeft:)];
     [swipeLeftGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
     swipeRightGesture  = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(userSwipedRight:)];
     [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
-//    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
-//                                                         action:@selector(userDraggedCell:)];
-//    [self addGestureRecognizer:panGesture];
     [self addGestureRecognizer:swipeLeftGesture];
     [self addGestureRecognizer:swipeRightGesture];
 }
@@ -277,10 +273,14 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 - (void)addObservers
 {
     @try {
-        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"GSCloseUtilNotification"];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  forKeyPath:@"GSCloseUtilNotification"];
     }
     @catch (NSException *exception) {}
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeUtilityButtonsView:) name:@"GSCloseUtilNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeUtilityButtonsView:)
+                                                 name:@"GSCloseUtilNotification"
+                                               object:nil];
 }
 
 - (void)closeUtilityButtonsView:(NSNotification*)notification
@@ -295,7 +295,9 @@ typedef NS_ENUM(NSUInteger, GSSwipeableCellState) {
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GSCloseUtilNotification"
                                                         object:nil];
-    [self performSelector:@selector(setSwipeableCellStateAsOpen) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(setSwipeableCellStateAsOpen)
+               withObject:nil
+               afterDelay:0.2];
 }
 
 - (void)setSwipeableCellStateAsOpen
